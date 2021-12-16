@@ -4,7 +4,7 @@
 
 <br />
 
-### Create Service Account using yaml file
+### Create Service Account `sample-sa`
 
 <details><summary>show</summary><p>
 
@@ -13,6 +13,8 @@ kubectl create serviceaccount sample-sa
 # OR
 kubectl create sa sample-sa
 ```
+
+OR
 
 ```yaml
 cat << EOF > sample-sa.yaml
@@ -59,6 +61,8 @@ kubectl describe secret sample-sa-token-p22nx
 
 ### Create Service Account `sample-sa-no-auto-mount` with auto mounting disabled 
 
+<br />
+
 <details><summary>show</summary><p>
 
 ```yaml
@@ -78,6 +82,8 @@ kubectl apply -f sample-sa-no-auto-mount.yaml
 <br />
 
 ### Create a pod with name `nginx-sa` and with image `nginx` and service account `sample-sa`
+
+<br />
 
 <details><summary>show</summary><p>
 

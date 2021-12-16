@@ -211,4 +211,4 @@ kubectl get events
 
 ## PodSecurityPolicy
 
-Refer [Pod Security Policy Admission Controller](./pod_security_policies)
+Refer [Pod Security Policy Admission Controller](./pod_security_policies.md)

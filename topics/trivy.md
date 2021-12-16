@@ -1,6 +1,6 @@
 # [Trivy](https://aquasecurity.github.io/trivy)
 
-- A Simple and Comprehensive Vulnerability Scanner for Containers and other Artifacts, Suitable for CI.
+A Simple and Comprehensive Vulnerability Scanner for Containers and other Artifacts, Suitable for CI.
 
 <br />
 

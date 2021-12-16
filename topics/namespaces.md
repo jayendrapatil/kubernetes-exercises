@@ -66,6 +66,22 @@ kubectl get pods -A
 
 <br />
 
+### Label namespace `alpha` with label `type:critical`
+
+<br />
+
+<details><summary>show</summary><p>
+
+```bash
+kubectl label namespace alpha type=critical
+
+kubectl get namespace alpha --show-labels
+# NAME    STATUS   AGE   LABELS
+# alpha   Active   70s   type=critical
+```
+
+</p></details>
+
 ### Delete namespace `alpha`
 
 <br />

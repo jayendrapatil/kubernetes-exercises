@@ -1,6 +1,6 @@
 # [Kubesec](https://kubesec.io/)
 
-- Security risk analysis for Kubernetes resources
+Security risk analysis for Kubernetes resources
 
 <br />
 

@@ -7,6 +7,8 @@
 
 ### Check number of replica sets in the default namespace
 
+<br />
+
 <details><summary>show</summary><p>
 
 ```bash
@@ -20,6 +22,8 @@ kubectl get rs
 <br />
 
 ### Create a replica set named `replica-set-demo` using a pod named ngnix using a nginx image and labeled as `tier=frontend` with a single replica.
+
+<br />
 
 <details><summary>show</summary><p>
 
@@ -52,6 +56,8 @@ kubectl apply -f replica-set-demo.yaml
 <br />
 
 ### Scale up the `replica-set-demo` from 1 replica to 2 replicas
+
+<br />
 
 <details><summary>show</summary><p>
 
@@ -90,6 +96,8 @@ EOF
 
 ### Scale up the `replica-set-demo` from 2 replicas to 1 replica
 
+<br />
+
 <details><summary>show</summary><p>
 
 ```bash
@@ -98,7 +106,7 @@ kubectl scale replicaset replica-set-demo --replicas=1
 
 OR
 
-Edit the replica set definition file `replica-set-demo.yaml` and apply `kubectl apply -f replica-set-demo.yaml`
+#### Edit the replica set definition file `replica-set-demo.yaml` and apply `kubectl apply -f replica-set-demo.yaml`
 
 ```yaml
 apiVersion: apps/v1
@@ -127,6 +135,8 @@ EOF
 
 ### Create a replica set using the below definition and fix any issues.
 
+<br />
+
 ```yaml
 apiVersion: v1
 kind: ReplicaSet
@@ -149,7 +159,7 @@ spec:
 
 <details><summary>show</summary><p>
 
-Check the apiVersion using `kubectl explain replicasets` which is `apps/v1`.  
+#### Check the apiVersion using `kubectl explain replicasets` which is `apps/v1`.  
 Update the version and apply again.
 
 </p></details>
@@ -157,6 +167,8 @@ Update the version and apply again.
 <br />
 
 ### Create a replica set using the below definition and fix any issues.
+
+<br />
 
 ```yaml
 apiVersion: apps/v1
@@ -184,6 +196,7 @@ The replica set selector field `tier: frontend` does not match the pod labels `t
 
 </p></details>
 
+<br />
 
 ### Clean up 
 

@@ -1,11 +1,11 @@
 # [RBAC authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 
+- Role and Role bindings are namespace scoped for e.g. pods, deployments, configmaps, etc.
+- Cluster Role and Cluster Role bindings are cluster scoped resources and not limited to namespaces for e.g. nodes, pv, etc.
+
 ## Table of Contents
 1. [Role and Role Bindings](#role-and-role-bindings)
 2. [Cluster Role and Cluster Role Bindings](#cluster-role-and-cluster-role-bindings)
-
-- Role and Role bindings are namespace scoped for e.g. pods, deployments, configmaps, etc.
-- Cluster Role and Cluster Role bindings are cluster scoped resources and not limited to namespaces for e.g. nodes, pv, etc.
 
 <br />
 
@@ -154,9 +154,13 @@ kubectl auth can-i get pods --as system:serviceaccount:default:sample-sa
 
 ## Cluster Role and Cluster Role Bindings
 
+<br />
+
 ### Create the following for a user `proxy-admin` (which does not exist)
  - Cluster role `proxy-admin-role` with permissions to `nodes` with `get, list,create, update` actions
  - Cluster role binding `proxy-admin-role-binding` to bind cluster role `proxy-admin-role` to user `proxy-admin`
+
+<br />
 
 <details><summary>show</summary><p>
 
@@ -177,7 +181,7 @@ kubectl auth can-i get nodes --as proxy-admin
 
 ## Clean up 
 
-<details><summary>show</summary><p>
+<br />
 
 ```bash
 rm sample-sa-pods-read-role-binding.yaml pods-read.yaml
@@ -187,5 +191,3 @@ kubectl delete role pods-read
 kubectl delete clusterrolebinding proxy-admin-role-binding
 kubectl delete clusterole proxy-admin-role
 ```
-
-</p></details>

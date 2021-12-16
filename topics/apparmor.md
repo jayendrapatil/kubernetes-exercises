@@ -1,5 +1,7 @@
 # [AppArmor](https://kubernetes.io/docs/tutorials/clusters/apparmor/)
 
+<br />
+
 ### Check if AppArmor is available on the cluster
 
 <br />

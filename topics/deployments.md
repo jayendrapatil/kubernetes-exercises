@@ -30,7 +30,7 @@ kubectl get deploy
 
 <br />
 
-### Create deployment name nginx with `nginx:1.20` image with 3 replicas
+### Create deployment named `nginx-deployment` with `nginx:1.20` image with `3` replicas
 
 <br />
 

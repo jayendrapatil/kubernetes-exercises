@@ -1,4 +1,4 @@
-# Logging
+# [Logging](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
 
 <br />
 
@@ -55,6 +55,6 @@ kubectl apply -f nginx-counter.yaml
 
 <details><summary>show</summary><p>
 
-`kubectl logs nginx-counter -c counter` OR `kubectl logs nginx-counter -c counter`
+`kubectl logs nginx-counter counter` OR `kubectl logs nginx-counter -c counter`
 
 </p></details> 

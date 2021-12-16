@@ -1,11 +1,12 @@
 # Readiness & Liveness Probes
 
-## Table of Contents
-1. [Readiness probes](#readiness-probes)
-2. [Liveness probes](#liveness-probes)
-
- -  Readiness probes helps kubelet to know when a container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready
+-  Readiness probes helps kubelet to know when a container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready
  - Liveness probes helps kubelet to know when the pod is unhealthy and needs to be restarted.
+
+<br />
+
+ - [Readiness probes](#readiness-probes)
+ - [Liveness probes](#liveness-probes)
 
 ## Readiness probes
 

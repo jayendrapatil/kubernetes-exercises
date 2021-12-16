@@ -1,12 +1,5 @@
 # [Pod](https://kubernetes.io/docs/concepts/workloads/pods/)
 
-## Table of Contents
-1. [Basics](#basics)
-2. [Multi-container Pods](#multi-container-pods)
-3. [Labels](#labels)
-4. [Node Selector](#node-selector)
-5. [Annotations](#annotations)
-
  - A Kubernetes pod is a group of containers, and is the smallest unit that Kubernetes administers. 
  - Pods have a single IP address that is applied to every container within the pod.
  - Pods can have single or multiple containers.
@@ -17,6 +10,15 @@
    - spec.activeDeadlineSeconds
    - spec.tolerations
  -  Edit the pod for changes and a tmp file is created. Delete and Recreate the pod using the tmp file.
+
+<br />
+
+ - [Basics](#basics)
+ - [Multi-container Pods](#multi-container-pods)
+ - [Labels](#labels)
+ - [Node Selector](#node-selector)
+ - [Resources - Requests and limits](#resources)
+ - [Annotations](#annotations)
 
 ## Basics
 
@@ -103,7 +105,7 @@ kubectl get pods -o wide
 
 <br />
 
-### get only the pods name
+### Get only the pods name
 
 <details><summary>show</summary><p>
 
@@ -183,18 +185,6 @@ kubectl get nginx -o yaml > nginx_definition.yaml
 ```bash
 kubectl run ubuntu-1 --image=ubuntu --command sleep 4800
 ```
-
-</p></details>
-
-<br />
-
-## Resource limits
-
-### Create a pod with resource limits
-
-<details><summary>show</summary><p>
-
-TBD
 
 </p></details>
 
@@ -413,6 +403,8 @@ kubectl apply -f nginx-node-selector.yaml
 
 ### Create pod `nginx-annotations` and Annotate it with `description='my description'` value
 
+<br />
+
 <details><summary>show</summary><p>
 
 ```bash
@@ -460,11 +452,64 @@ kubectl delete pod nginx-annotations --force
 
 </p></details> 
 
-### Clean up 
+<br />
+
+## [Resources](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+
+<br />
+
+### Create an nginx pod name `nginx-resources` with `requests` `cpu=100m,memory=256Mi` and `limits` `cpu=200m,memory=512Mi`
+
+<br />
+
+<details><summary>show</summary><p>
 
 ```bash
-rm nginx-labels.yaml nginx-file.yaml nginx_definition.yaml
-kubeclt delete pod nginx nginx-labels custom-nginx nginx-file ubuntu-1 nginx-node-selector nginx-annotations --force --grace-period=0
+kubectl run nginx-resources --image=nginx --restart=Never --requests='cpu=100m,memory=256Mi' --limits='cpu=200m,memory=512Mi'
+```
+
+OR 
+
+```yaml
+cat << EOF > nginx-resources.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx-resources
+  name: nginx-resources
+spec:
+  containers:
+  - image: nginx
+    name: nginx-resources
+    resources:
+      limits:
+        cpu: 200m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
+EOF
+
+kubectl apply -f nginx-resources.yaml
+```
+
+</p>
+</details>
+
+<br />
+
+### Clean up 
+
+<br />
+
+```bash
+rm nginx-labels.yaml nginx-file.yaml nginx_definition.yaml nginx-resources.yaml
+kubeclt delete pod nginx nginx-labels custom-nginx nginx-file ubuntu-1 nginx-node-selector nginx-annotations nginx-resources --force --grace-period=0
 kubeclt delete pod nginx -n alpha --force --grace-period=0
 kubectl delete namespace alpha
 ```

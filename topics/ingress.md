@@ -93,7 +93,7 @@ kubectl get ingress web-ingress # you will get an ip address of the ingress cont
 
 <br />
 
-### Create a tls secret `testsecret-tls` using tls.crt from file `data/tls.crt` and `data/tls.key`. Enable tls for the ingress below.
+### Create a tls secret `testsecret-tls` using tls.crt from file `../data/tls.crt` and `../data/tls.key`. Enable tls for the ingress below.
 
 <br />
 
@@ -119,7 +119,7 @@ spec:
 <details><summary>show</summary><p>
 
 ```bash
-kubectl create secret tls testsecret-tls --cert=./tls/tls.crt --key=./tls/tls.key
+kubectl create secret tls testsecret-tls --cert=tls.crt --key=tls.key
 ```
 
 ```yaml

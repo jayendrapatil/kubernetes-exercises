@@ -78,7 +78,7 @@ kubectl config get-contexts --kubeconfig kubeconfig.yaml
 
 <br />
 
-### get the current context
+### Get the current context
 
 <br />
 

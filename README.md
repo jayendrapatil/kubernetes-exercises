@@ -12,7 +12,7 @@ Try out the Katacode Kubernetes playgroud which provides 2 node kubernetes clust
 
 [Katacode Kubernetes Playgroud](https://www.katacoda.com/courses/kubernetes/playground)
 
-NOTE: Current k8s version is 1.18 while the exams have already upgraded to 1.22 version. Also, I have done my best to test all the code samples in the playgroud and works fine.
+**NOTE**: Current k8s version is 1.18 while the exams have already upgraded to 1.22 version. Also, I have done my best to test all the code samples in the playgroud and works fine.
 
 ## Structure 
 

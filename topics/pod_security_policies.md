@@ -1,7 +1,7 @@
 # [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/)
 
-Pod Security Policies enable fine-grained authorization of pod creation and updates.  
-PodSecurityPolicy is deprecated as of Kubernetes v1.21, and will be removed in v1.25.
+ - Pod Security Policies enable fine-grained authorization of pod creation and updates.  
+ - PodSecurityPolicy is deprecated as of Kubernetes v1.21, and will be removed in v1.25.
 
 <br />
 
@@ -101,7 +101,7 @@ kubectl apply -f nginx.yaml
 
 <br />
 
-### Update the `psp-example` Pod Security Policy to allow only `configMap` and `secret` volumes.
+### Update the `psp-example` Pod Security Policy to allow only `configMap` and `secret` volumes. Try creating the nginx pod with following specs.
 
 ```yaml
 cat << EOF > nginx.yaml
@@ -161,7 +161,7 @@ kubectl apply -f nginx.yaml
 
 <br />
 
-### Update the following Pod Security Policy `psp-example` to allow only `/data` as host paths in `readOnly` mode. 
+### Update the following Pod Security Policy `psp-example` to allow only `/data` as host paths in `readOnly` mode. Try creating the nginx pod with following specs.
 
 ```yaml
 cat << EOF > nginx.yaml

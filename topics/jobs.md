@@ -1,9 +1,11 @@
 # Jobs & Cron Jobs
- - A Job creates one or more Pods and will continue to retry execution of the Pods until a specified number of them successfully terminate.
- - A CronJob creates Jobs on a repeating schedule.
+A Job creates one or more Pods and will continue to retry execution of the Pods until a specified number of them successfully terminate.  
+A CronJob creates Jobs on a repeating schedule.
 
-1. [Jobs](#jobs)
-2. [Cron Jobs](#cron-jobs)
+<br />
+
+- [Jobs](#jobs)
+- [Cron Jobs](#cron-jobs)
 
 <br /> 
 

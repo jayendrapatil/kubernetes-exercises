@@ -86,6 +86,10 @@ kubectl apply -f nginx.yaml
 
 <br >
 
+Refer [AppArmor](./apparmor.md)
+
+<br >
+
 ## Seccomp 
 
 Refer [Seccomp - Secure Computing](./seccomp.md)

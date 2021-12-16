@@ -8,9 +8,11 @@
 
 <br />
 
- ### Check the syscalls made by `ls` using the `strace` command
+### Check the syscalls made by `ls` using the `strace` command
 
- ```bash
+<br />
+
+```bash
 strace -c ls 
 
 # % time     seconds  usecs/call     calls    errors syscall
@@ -43,6 +45,8 @@ strace -c ls
 
 ### Check if the OS supports Seccomp
 
+<br />
+
  ```bash
 grep -i seccomp /boot/config-$(uname -r)
 # CONFIG_HAVE_ARCH_SECCOMP_FILTER=y
@@ -54,7 +58,9 @@ grep -i seccomp /boot/config-$(uname -r)
 
 ### Check the status of Seccomp on the Kubernetes cluster 
 
- ```bash
+<br />
+
+```bash
 kubectl run amicontained --image jess/amicontained -- amicontained
 kk logs amicontained
 # Container Runtime: docker
@@ -73,6 +79,8 @@ kk logs amicontained
  <br />
 
 ### Enable Seccomp for the `amicontained` using following specs and Seccomp `type: RuntimeDefault`.
+
+<br />
 
 ```yaml
 apiVersion: v1
@@ -136,6 +144,8 @@ kk logs amicontained
 <br />
 
 ### Create a nginx pod named `audit-pod` using audit.json seccomp profile.
+
+<br />
 
 ```bash
 # file is also available in the [data/seccomp](../data/Seccomp/audit.json) folder
