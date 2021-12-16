@@ -7,3 +7,8 @@
  - [Application Deployment - 20%](2.application_deployment.md)
  - [Services & Networking - 20%](5.services_networking.md)
  - [Application observability and maintenance - 15%](3.application_observability_maintenance.md)
+
+## Resources
+
+ - [Certified Kubernetes Application Developer - CKAD learning path](https://jayendrapatil.com/certified-kubernetes-application-developer-ckad-learning-path/)
+ - [KodeKloud Certified Kubernetes Application Developer Course](https://kodekloud.com/courses/certified-kubernetes-application-developer-ckad/)

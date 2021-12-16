@@ -7,3 +7,8 @@
 3. [Services & Networking - 20%](3.services_networking.md)
 4. [Storage - 10%](4.storage.md)
 5. [Troubleshooting - 30%](5.troubleshooting.md)
+
+## Resources
+
+ - [Certified Kubernetes Administrator - CKA learning path](https://jayendrapatil.com/certified-kubernetes-administrator-cka-learning-path/)
+ - [KodeKloud Certified Kubernetes Administrator Course](https://kodekloud.com/courses/certified-kubernetes-administrator-cka/)
