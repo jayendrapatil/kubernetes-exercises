@@ -8,6 +8,7 @@ Topics cover test exercises for each topics
  - [Auditing](./auditing.md)
  - [Authentication](../authentication.md)
  - [Platform Binary Verfication](./binary_verification.md)
+ - [Cluster Upgrade](./cluster_upgrade.md)
  - [ConfigMaps](./configmaps.md)   
  - [Deployments](./deployments.md)  
  - [Falco](./falco.md)
