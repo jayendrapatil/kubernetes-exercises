@@ -26,6 +26,8 @@
 
 ### Check number of pods in the default namespace
 
+<br />
+
 <details><summary>show</summary><p>
 
 ```bash
