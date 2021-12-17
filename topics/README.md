@@ -13,8 +13,9 @@ Topics cover test exercises for each topics
  - [Falco](./falco.md)
  - [Ingress](./ingress.md)  
  - [Jobs](./jobs.md)  
- - [kube-bench](../kube-bench.md)
- - [Kubeconfig](./kubeconfig.md)  
+ - [kube-bench](./kube-bench.md)
+ - [Kubeconfig](./kubeconfig.md) .
+ - [Kubelet Security](./kubelet_security.md)
  - [Kubesec](./kubesec.md)
  - [Logging](./logging.md)  
  - [Monitoring](./monitoring.md)  
