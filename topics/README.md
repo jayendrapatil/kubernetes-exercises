@@ -31,7 +31,7 @@ Topics cover test exercises for each topics
  - [Runtime Classes](./runtimes.md)
  - [Seccomp](./seccomp.md)
  - [Secrets](./secrets.md)  
- - [Service Acounts](./service_acounts.md)  
+ - [Service Accounts](./service_accounts.md)  
  - [Services](./services.md)  
  - [Taints & Tolerations](./taints_tolerations.md)  
  - [Trivy](./trivy.md)
