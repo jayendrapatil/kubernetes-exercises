@@ -196,30 +196,7 @@ kubectl run ubuntu-1 --image=ubuntu --command sleep 4800
 
 <br />
 
-### Create a multi-container pod `multi-container-pod` with 2 containers
- - first container name `nginx` with image `nginx`
- - second container name `redis` with image `redis`
-
-<details><summary>show</summary><p>
-
-```yaml
-cat << EOF > multi-container-pod.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: multi-container-pod
-spec:
-  containers:
-  - image: nginx
-    name: nginx
-  - image: redis
-    name: redis
-EOF
-
-kubectl apply -f multi-container-pod.yaml
-```
-
-</p></details>
+Refer [Multi-container Pods](multi_container_pods.md)
 
 <br />
 

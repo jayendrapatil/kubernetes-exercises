@@ -2,7 +2,7 @@
 
 <br />
 
-### Create a pod with below specs. Check the logs of the pod.
+### Create a pod with below specs. Check the logs of the pod. Retrieve all currently available application logs from the running pod and store them in the file /tmp/counter.log.
 
 <br />
 
@@ -25,7 +25,17 @@ kubectl apply -f counter.yaml
 
 <details><summary>show</summary><p>
 
-`kubectl logs counter` OR `kubectl logs counter -f` for tailing the logs
+```bash
+kubectl logs counter
+OR 
+kubectl logs counter -f # for tailing the logs
+``` 
+
+#### Copy the logs to the /tmp/counter.log folder.
+
+```bash
+kubectl logs counter > /tmp/counter.log
+```
 
 </p></details> 
 
@@ -58,3 +68,12 @@ kubectl apply -f nginx-counter.yaml
 `kubectl logs nginx-counter counter` OR `kubectl logs nginx-counter -c counter`
 
 </p></details> 
+
+<br />
+
+### Cleanup 
+
+```bash
+rm /tmp/counter.log
+kubectl delete pod nginx-counter
+```

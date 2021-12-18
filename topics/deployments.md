@@ -428,6 +428,68 @@ kubectl delete -f nginx-deployment.yaml
 
 <br />
 
+## Troubleshooting
+
+### A deployment is falling on the cluster. Identify the issue and fix the problem.
+
+```yaml
+cat << EOF > nginx-fix.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-fix
+  name: nginx-fix
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nqinx
+        name: nginx
+EOF
+
+kubectl apply -f nginx-fix.yaml
+```
+
+<details><summary>show</summary><p>
+
+#### The image nquix is invalid. Change the image to nginx.
+
+```bash
+kubectl get deploy nginx-fix
+# NAME        READY   UP-TO-DATE   AVAILABLE   AGE
+# nginx-fix   0/3     3            0           16s
+
+kubectl get pods -l app=nginx
+# NAME                         READY   STATUS         RESTARTS   AGE
+# nginx-fix-7cf9964fc7-9bkln   0/1     ErrImagePull   0          38s
+# nginx-fix-7cf9964fc7-jcz6p   0/1     ErrImagePull   0          38s
+# nginx-fix-7cf9964fc7-n5dqh   0/1     ErrImagePull   0          38s
+
+kubectl describe pod nginx-fix-7cf9964fc7-9bkln
+# Warning  Failed     1s (x4 over 97s)   kubelet, node01    Failed to pull image "nqinx": rpc error: code = Unknown desc = Error response from daemon: pull access denied for nqinx, repository does not exist or may require 'docker login': denied: requested access to the resource is denied
+# Warning  Failed     1s (x4 over 97s)   kubelet, node01    Error: ErrImagePull
+
+# fix the image 
+kubectl set image deployment.v1.apps/nginx-fix nqinx=nginx
+
+kubectl get pods -l app=nginx
+# NAME                        READY   STATUS    RESTARTS   AGE
+# nginx-fix-f89759699-gn8q9   1/1     Running   0          27s
+# nginx-fix-f89759699-lmwpc   1/1     Running   0          30s
+# nginx-fix-f89759699-vbpln   1/1     Running   0          38s
+
+```
+
+</p></details>
+
 ### Clean up 
 
 <br />

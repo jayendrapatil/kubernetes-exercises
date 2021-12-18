@@ -93,7 +93,7 @@ status: {}
 
 <details><summary>show</summary><p>
 
-Edit `nginx-liveness.yaml` file to update `livenessProbe` probe as below. Delete and recreate pod using `kubectl apply -f nginx-liveness.yaml`
+#### Edit `nginx-liveness.yaml` file to update `livenessProbe` probe as below. Delete and recreate pod using `kubectl apply -f nginx-liveness.yaml`
 
 ```YAML
 apiVersion: v1
@@ -120,13 +120,62 @@ spec:
 status: {}
 ```
 
-</p></details> 
+</p></details>
 
 <br />
+
+## Troubleshooting
+
+### Create a pod `liveness-exec` with the following specs. Wait for 30 secs and check if the pod restarts. Identify the reason.
+
+```bash
+cat << EOF > exec-liveness.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: liveness-exec
+spec:
+  containers:
+  - name: liveness
+    image: k8s.gcr.io/busybox
+    args:
+    - /bin/sh
+    - -c
+    - touch /tmp/healthy; sleep 30; rm -rf /tmp/healthy; sleep 600
+    livenessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+      initialDelaySeconds: 5
+      periodSeconds: 5
+EOF
+
+kubectl apply -f exec-liveness.yaml
+```
+
+<details><summary>show</summary><p>
+
+```bash
+kubectl get pod liveness-exec -w # pod restarts due to failed liveness check
+# NAME            READY   STATUS    RESTARTS   AGE
+# liveness-exec   1/1     Running   0          17s
+# liveness-exec   1/1     Running   1          76s
+
+kubectl describe pod liveness-exec
+
+# Normal   Started    69s (x2 over 2m22s)  kubelet, node01    Started container liveness
+# Warning  Unhealthy  25s (x6 over 110s)   kubelet, node01    Liveness probe failed: cat: can't open '/tmp/healthy': No such file or directory
+# Normal   Killing    25s (x2 over 100s)   kubelet, node01    Container liveness failed liveness probe, will be restarted
+```
+
+</p></details>
 
 ### Clean up 
 
 ```bash
 rm nginx-liveness.yaml nginx-readiness.yaml
-kubectl delete pod nginx-readiness nginx-liveness --force
+kubectl delete pod nginx-readiness nginx-liveness liveness-exec --force
 ```
