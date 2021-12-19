@@ -178,6 +178,106 @@ spec:
 
 <br />
 
+### Scale the deployment with below specs for availability, and create a service to expose the deployment within your infrastructure. Start with the deployment named ha-deployment which has already been deployed to the namespace ha . 
+Edit it to:
+- create namespace ha
+- Add the func=frontend key/value label to the pod template metadata to identify the pod for the service definition
+- Have 4 replicas
+- Exposes the service on TCP port 8080
+- is mapped to the pods defined by the specification of ha-deployment
+- Is of type NodePort
+- Has a name of cherry
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ha-deployment
+  name: ha-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ha-deployment
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ha-deployment
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}
+EOF 
+```
+
+<details><summary>show</summary><p>
+
+#### Create namespace `ha`
+
+```bash
+kubectl create namespace ha
+```
+
+#### Edit the deployment specs for 4 replicas and label
+
+```yaml
+cat << EOF > ha-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ha-deployment
+  name: ha-deployment
+spec:
+  replicas: 4 # 4 replicas
+  selector:
+    matchLabels:
+      app: ha-deployment
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ha-deployment
+        func: frontend # label added to pod
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}
+EOF
+
+kubectl apply -f ha-deployment.yaml -n ha
+
+kubectl get pods -n ha
+# NAME                             READY   STATUS    RESTARTS   AGE
+# ha-deployment-66b7f8d45b-4pndp   1/1     Running   0          22s
+# ha-deployment-66b7f8d45b-5r77r   1/1     Running   0          22s
+# ha-deployment-66b7f8d45b-7hq7q   1/1     Running   0          22s
+# ha-deployment-66b7f8d45b-szklj   1/1     Running   0          22s
+```
+
+#### Expose the deployment as a service with name cherry
+
+```bash
+kubectl expose deployment ha-deployment --name cherry --type NodePort --port 8080 --target-port 80 --namespace ha
+
+kubectl get svc -n ha
+# NAME     TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+# cherry   NodePort   10.104.241.152   <none>        8080:30321/TCP   20s
+
+# test using any node ip and node port
+# curl http://<node-ip>:30321/
+```
+
+</p></details>
+
+<br />
+
 ## Deployment Rollout
 
 <br />
