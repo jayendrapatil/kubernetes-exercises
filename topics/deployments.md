@@ -528,7 +528,121 @@ kubectl delete -f nginx-deployment.yaml
 
 <br />
 
+### As a Kubernetes application developer you will often find yourself needing to update a running application. Please complete the following using the following specs:
+- Update the web1 deployment with a maxSurge of 5% and a maxUnavailable of 2%
+- Perform a rolling update of the web1 deployment, changing the nginx image version to 1.21
+- Roll back the web1 deployment to the previous version
+
+```yaml
+cat << EOF > web1.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: web1
+  name: web1
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: web1
+  template:
+    metadata:
+      labels:
+        app: web1
+    spec:
+      containers:
+      - image: nginx:1.12-alpine
+        name: web1
+EOF
+
+kubectl apply -f web1.yaml
+```
+
+<details><summary>show</summary><p>
+
+#### Edit the deployment to update the rolling update strategy for maxSurge & maxUnavailable
+
+```yaml
+cat << EOF > web1.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: web1
+  name: web1
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: web1
+  strategy:
+    rollingUpdate: # update the rolling update strategy for maxSurge & maxUnavailable
+      maxSurge: 5% 
+      maxUnavailable: 2%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: web1
+    spec:
+      containers:
+      - image: nginx:1.20-alpine
+        name: web1
+EOF
+
+kubectl apply -f web1.yaml
+```
+
+#### Update the image to 1.21-alpine
+
+```bash
+kubectl set image deployment web1 web1=nginx:1.21-alpine
+```
+
+#### Check rollout history and undo rollout
+
+```bash
+kubectl rollout history deployment web1
+# deployment.apps/web1 
+# REVISION  CHANGE-CAUSE
+# 1         <none>
+# 2         <none>
+# 3         <none>
+
+kubectl rollout history deploy web1 --revision=3
+# deployment.apps/web1 with revision #3
+# Pod Template:
+#   Labels:       app=web1
+#         pod-template-hash=848b67cbfc
+#   Containers:
+#    web1:
+#     Image:      nginx:1.21-alpine
+#     Port:       <none>
+#     Host Port:  <none>
+#     Environment:        <none>
+#     Mounts:     <none>
+#   Volumes:      <none>
+
+kubectl rollout undo deploy web1 --to-revision=2
+# deployment.apps/web1 rolled back
+
+kubectl rollout history deployment web1
+# deployment.apps/web1 
+# REVISION  CHANGE-CAUSE
+# 1         <none>
+# 3         <none>
+# 4         <none>
+
+```
+
+</p></details>
+
+<br />
+
 ## Troubleshooting
+
+<br />
 
 ### A deployment is falling on the cluster. Identify the issue and fix the problem.
 
@@ -595,6 +709,6 @@ kubectl get pods -l app=nginx
 <br />
 
 ```bash
-rm nginx-deployment.yaml
-kubectl delete deploy nginx-deployment
+rm nginx-deployment.yaml web1.yaml
+kubectl delete deploy nginx-deployment web1
 ```

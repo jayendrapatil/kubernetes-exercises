@@ -3,6 +3,7 @@
 Topics cover test exercises for each topics
 
  - [Admission Controllers](./admission_controllers.md)  
+ - [Annotations](./annotations.md)
  - [APIs](./apis.md)  
  - [AppArmor](./apparmor.md)
  - [Auditing](./auditing.md)
@@ -18,6 +19,7 @@ Topics cover test exercises for each topics
  - [Kubeconfig](./kubeconfig.md) .
  - [Kubelet Security](./kubelet_security.md)
  - [Kubesec](./kubesec.md)
+ - [Labels](./labels.md)
  - [Logging](./logging.md)  
  - [Monitoring](./monitoring.md)  
  - [Namespaces](./namespaces.md)  

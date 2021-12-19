@@ -2,20 +2,20 @@
 
 <br />
 
-### Create a new pod `nginx-4` with `nginx` image and mount the configmap `db-config-1` as a volume named `db-config` and mount path `/config`
+### Create a new pod `nginx-3` with `nginx` image and mount the configmap `db-config-1` as a volume named `db-config` and mount path `/config`
 
 <details><summary>show</summary><p>
 
 ```yaml
-cat << EOF > nginx-4.yaml
+cat << EOF > nginx-3.yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-4
+  name: nginx-3
 spec:
   containers:
   - image: nginx
-    name: nginx-4
+    name: nginx-3
     volumeMounts:
       - name: db-config
         mountPath: "/config"
@@ -26,7 +26,7 @@ spec:
         name: db-config-1
 EOF
 
-kubectl apply -f nginx-4.yaml
+kubectl apply -f nginx-3.yaml
 
 kubectl exec nginx-4 -- cat /config/DB_HOST # verify env variables
 # db.example.com
@@ -71,6 +71,30 @@ kubectl exec nginx-4 -- cat /secret/DB_HOST  # verify env variables
 </p></details>
 
 <br />
+
+### Create the redis pod with `redis` image with volume `redis-storage` as ephemeral storage mounted at `/data/redis`.
+
+```yaml
+cat << EOF > redis.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+spec:
+  containers:
+  - name: redis
+    image: redis
+    volumeMounts:
+    - name: redis-storage
+      mountPath: /data/redis
+  volumes:
+  - name: redis-storage
+    emptyDir: {} # Ephemeral storage
+EOF
+
+kubectl apply -f redis.yaml
+```
+
 
 ### Create the following
  - PV `task-pv-volume` with storage `10Mi`, Access Mode `ReadWriteOnce` on hostpath `/mnt/data`.   
@@ -159,6 +183,8 @@ kubectl apply -f task-pv-pod.yaml
 
 ### Get the storage classes (Storage class does not belong to namespace)
 
+<br />
+
 <details><summary>show</summary><p>
 
 ```bash
@@ -175,7 +201,8 @@ kubectl get sc
 <details><summary>show</summary><p>
 
 ```bash
-kubectl delete pod task-pv-pod --force
+rm nginx-3.yaml nginx-4.yaml redis.yaml
+kubectl delete pod task-pv-pod redis nginx-3 nginx-4 --force
 kubectl delete pvc task-pv-claim
 kubectl delete pv task-pv-volume
 ```
