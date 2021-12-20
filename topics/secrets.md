@@ -145,6 +145,46 @@ kubectl exec nginx-2 -- env | grep DB_HOST # verify env variables
 
 <br />
 
+### You are tasked to create a secret and consume the secret in a pod using environment variables as follow:
+- Create a secret named another-secret with a key/value pair; key1/value4
+- Start an nginx pod named nginx-secret using container image nginx, and add an environment variable exposing the value of the secret key key 1, using COOL_VARIABLE as the name for the environment variable inside the pod
+
+<details><summary>show</summary><p>
+
+```bash
+kubectl create secret generic another-secret --from-literal=key1=value4
+```
+
+```yaml
+cat << EOF > nginx-secret.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-secret
+spec:
+  containers:
+  - image: nginx
+    name: nginx-secret
+    env:
+    - name: COOL_VARIABLE
+      valueFrom: 
+        secretKeyRef: 
+          name: another-secret
+          key: key1
+EOF
+
+kubectl apply -f nginx-secret.yaml
+```
+
+```bash
+kubectl exec nginx-2 -- env | grep DB_HOST # verify env variables
+# DB_HOST=db.example.com 
+```
+
+</p></details> 
+
+<br />
+
 ### Create a new pod `nginx-3` with `nginx` image and add all env variables from from secret map `db-secret-1`
 
 <details><summary>show</summary><p>
@@ -277,7 +317,7 @@ kubectl apply -f nginx-5.yaml
 ### Clean up 
 
 ```bash
-kubectl delete pod nginx-1 nginx-2 nginx-3 nginx-4 nginx-5 --force --grace-period=0
+kubectl delete pod nginx-1 nginx-2 nginx-3 nginx-4 nginx-5 nginx-secret --force --grace-period=0
 kubectl delete secret db-secret-1 db-secret-2 my-tls-secret regcred
-rm secret.properties nginx-2.yaml nginx-3.yaml nginx-4.yaml nginx-5.yaml
+rm secret.properties nginx-2.yaml nginx-3.yaml nginx-4.yaml nginx-5.yaml nginx-secret.yaml
 ```

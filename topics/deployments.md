@@ -94,6 +94,122 @@ kubectl get deploy nginx-deployment -o yaml
 
 <br />
 
+### Create a new deployment for running nginx with the following parameters
+- Name the deployment `frontend` and configure with 4 replicas
+- Configure the pod with a container image of nginx:1.21
+- Set an environment variable of NGINX PORT=8080 and also expose that port for the container above
+
+<br />
+
+<details><summary>show</summary><p>
+
+```bash
+kubectl create deployment frontend --replicas=4 --image=nginx:1.21 --dry-run=client -o yaml > frontend.yaml
+# --replicas is newly introduced and if it does not work use it without the replicas
+kubectl create deployment frontend --image=nginx:1.21 --dry-run=client -o yaml > frontend.yaml
+```
+
+#### Edit the frontend.yaml for replicas, port and env variable
+
+```yaml
+cat << EOF > frontend.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: frontend
+  name: frontend
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: frontend
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - image: nginx:1.21
+        name: nginx
+        ports:
+        - containerPort: 8080
+        env:
+        - name: NGINX_PORT
+          value: "8080"
+        resources: {}
+status: {}
+EOF
+
+kubectl apply -f frontend.yaml
+```
+
+</p></details> 
+
+<br />
+
+### Create a deployment as follows:
+- Name: nginx-random using the nginx image
+- Exposed via a service nginx-random
+- Ensure that the service & pod are accessible via their respective DNS records
+- Use the utility nslookup to lookup the DNS records of the service & pod
+
+<br />
+
+<details><summary>show</summary><p>
+
+```bash
+kubectl create deployment nginx-random --image=nginx
+kubectl expose deployment nginx-random --name=nginx-random --port=80 --target-port=80
+```
+
+#### Verify the nslookup works. (Busybox latest version had issues with service nslookup, so using dnsutils)
+
+```yaml
+cat << EOF > dnsutils.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dnsutils
+spec:
+  containers:
+  - name: dnsutils
+    image: k8s.gcr.io/e2e-test-images/jessie-dnsutils:1.3
+    command:
+      - sleep
+      - "3600"
+    imagePullPolicy: IfNotPresent
+  restartPolicy: Always
+EOF
+
+kubectl apply -f dnsutils.yaml
+
+kubectl exec dnsutils -- nslookup nginx-random
+# Server:         10.96.0.10
+# Address:        10.96.0.10#53
+
+# Name:   nginx-random.default.svc.cluster.local
+# Address: 10.110.119.135
+
+kubectl get pods -l app=nginx-random -o wide
+# NAME                            READY   STATUS    RESTARTS   AGE     IP          NODE           NOMINATED NODE   READINESS GATES
+# nginx-random-77fb464776-sbp8v   1/1     Running   0          8m25s   10.50.0.8   controlplane   <none>           <none>
+
+kubectl exec dnsutils -- nslookup 10.50.0.8
+# Server:         10.96.0.10
+# Address:        10.96.0.10#53
+
+# 8.0.50.10.in-addr.arpa  name = 10-50-0-8.nginx-random.default.svc.cluster.local.
+
+```
+
+</p></details>
+
+<br />
+
 ## Deployment Scaling
 
 <br />
@@ -709,6 +825,7 @@ kubectl get pods -l app=nginx
 <br />
 
 ```bash
-rm nginx-deployment.yaml web1.yaml
-kubectl delete deploy nginx-deployment web1
+rm nginx-deployment.yaml web1.yaml dnsutils.yaml
+kubectl delete pod dnsutils
+kubectl delete deploy nginx-deployment nginx-random web1
 ```

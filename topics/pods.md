@@ -49,6 +49,21 @@ kubectl run nginx --image=nginx
 
 <br />
 
+
+### Create a pod named `mongo` using image `mongo` in a new Kubernetes namespace `my-website`
+
+<details><summary>show</summary><p>
+
+```bash
+kubectl create namespace my-website
+kubectl run mongo --image=mongo --namespace=my-website
+```
+
+</p></details>
+
+<br />
+
+
 ### Create a new pod with name nginx and using the nginx image in the `alpha` namespace
 
 <details><summary>show</summary><p>
@@ -372,8 +387,6 @@ kubectl apply -f nginx-resources.yaml
 
 <br />
 
-
-
 ### Clean up 
 
 <br />
@@ -381,7 +394,8 @@ kubectl apply -f nginx-resources.yaml
 ```bash
 rm nginx-labels.yaml nginx-file.yaml nginx_definition.yaml nginx-resources.yaml
 kubectl delete pod nginx nginx-labels custom-nginx nginx-file ubuntu-1 nginx-node-selector nginx-annotations nginx-resources --force --grace-period=0
+kubectl delete pod mongo -n my-website --force --grace-period=0
 kubectl delete pod cache -n web --force --grace-period=0
 kubectl delete pod nginx -n alpha --force --grace-period=0
-kubectl delete namespace alpha web
+kubectl delete namespace alpha web my-website
 ```
