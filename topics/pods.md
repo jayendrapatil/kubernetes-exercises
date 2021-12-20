@@ -17,6 +17,8 @@
  - [Multi-container Pods](#multi-container-pods)
  - [Node Selector](#node-selector)
  - [Resources - Requests and limits](#resources)
+ - [Static Pods](#static-pods)
+ - [Init Containers](#init-containers)
 
 ## Basics
 
@@ -387,13 +389,76 @@ kubectl apply -f nginx-resources.yaml
 
 <br />
 
+## [Static Pods](https://kubernetes.io/docs/concepts/workloads/pods/#static-pods)
+
+<br />
+
+
+
+### Configure the kubelet systemd-managed service, on the node labelled with name=node01, to launch a pod containing a single container of Image httpd named webtool automatically. Any spec files required should be placed in the /etc/kubernetes/manifests directory on the node.
+
+<br />
+
+<details><summary>show</summary><p>
+
+#### Check the static pod path in the kubelet config file
+
+```bash
+ps -ef | grep kubelet
+# root      2794     1  3 07:43 ?        00:01:05 /usr/bin/kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf --config=/var/lib/kubelet/config.yaml --cgroup-driver=systemd --network-plugin=cni --pod-infra-container-image=k8s.gcr.io/pause:3.2 --resolv-conf=/run/systemd/resolve/resolv.conf
+
+# Check the config file @ /var/lib/kubelet/config.yaml for the staticPodPath property
+staticPodPath: /etc/kubernetes/manifests
+```
+
+#### Execute the below on node01
+
+```yaml
+mkdir /etc/kubernetes/manifests # create the static pod path, if it does not exist.
+
+cat << EOF > webtool.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: webtool
+  name: webtool
+spec:
+  containers:
+  - image: httpd
+    name: webtool
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+EOF
+
+systemctl restart kubelet # if required
+```
+
+#### Check on controlpanel node 
+
+```bash
+kubectl get pods
+# NAME             READY   STATUS    RESTARTS   AGE
+# webtool-node01   1/1     Running   0          11s
+```
+
+</p></details>
+
+<br />
+
+## Init Containers
+
+Refer [Init Containers](./init)
+
 ### Clean up 
 
 <br />
 
 ```bash
 rm nginx-labels.yaml nginx-file.yaml nginx_definition.yaml nginx-resources.yaml
-kubectl delete pod nginx nginx-labels custom-nginx nginx-file ubuntu-1 nginx-node-selector nginx-annotations nginx-resources --force --grace-period=0
 kubectl delete pod mongo -n my-website --force --grace-period=0
 kubectl delete pod cache -n web --force --grace-period=0
 kubectl delete pod nginx -n alpha --force --grace-period=0
