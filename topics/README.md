@@ -13,6 +13,7 @@ Topics cover test exercises for each topics
  - [ConfigMaps](./configmaps.md)  
  - [DaemonSets](./daemonsets.md)
  - [Deployments](./deployments.md)  
+ - [ETCD](./etcd.md)
  - [Falco](./falco.md)
  - [Ingress](./ingress.md) 
  - [Init Containers](../init_containers.md) 

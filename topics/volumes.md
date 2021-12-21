@@ -74,6 +74,8 @@ kubectl exec nginx-4 -- cat /secret/DB_HOST  # verify env variables
 
 ### Create the redis pod with `redis` image with volume `redis-storage` as ephemeral storage mounted at `/data/redis`.
 
+<details><summary>show</summary><p>
+
 ```yaml
 cat << EOF > redis.yaml
 apiVersion: v1
@@ -95,6 +97,46 @@ EOF
 kubectl apply -f redis.yaml
 ```
 
+</p></details>
+
+<br />
+
+### Create a pod as follows: 
+ - Name: non-persistent-redis
+ - container Image:redis
+ - Volume with name: cache-control
+ - Mount path: /data/redis
+ - The pod should launch in the staging namespace and the volume must not be persistent.
+
+<details><summary>show</summary><p>
+
+```yaml
+kubectl create namespace staging
+
+cat << EOF > non-persistent-redis.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: non-persistent-redis
+  namespace: staging
+spec:
+  containers:
+  - name: redis
+    image: redis
+    volumeMounts:
+    - name: cache-control
+      mountPath: /data/redis
+  volumes:
+  - name: cache-control
+    emptyDir: {}
+EOF
+
+kubectl apply -f non-persistent-redis.yaml
+```
+
+</p></details>
+
+<br />
 
 ### Create the following
  - PV `task-pv-volume` with storage `10Mi`, Access Mode `ReadWriteOnce` on hostpath `/mnt/data`.   
@@ -149,7 +191,6 @@ kubectl get pvc
 kubectl get pv # check status bound
 #NAME             CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                   STORAGECLASS   REASON   AGE
 #task-pv-volume   10Mi       RWO            Retain           Bound    default/task-pv-claim   manual                  64s
-
 ```
 
 ```yaml
