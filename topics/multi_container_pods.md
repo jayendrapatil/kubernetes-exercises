@@ -29,6 +29,33 @@ kubectl apply -f multi-container-pod.yaml
 
 <br />
 
+### Create a pod named multi-container-nrm with a single app container for each of the following images running inside: nginx + redis + memcached.
+
+<details><summary>show</summary><p>
+
+```yaml
+cat << EOF > multi-container-nrm.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-container-nrm
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+  - image: redis
+    name: redis
+  - image: memcached
+    name: memcached
+EOF
+
+kubectl apply -f multi-container-nrm.yaml
+```
+
+</p></details>
+
+<br />
+
 ### Create a multi-container pod using the fluentd acting as a sidecar container. with the given specs below. Update the deployment such that it runs both containers and the log files from the first container can be shared/used by the second container. Mount a shared volume /var/log on both containers, which does not persist when the pod is deleted.
 
 ```yaml
@@ -165,3 +192,11 @@ kubectl exec counter -c count-agent -- cat /var/log/1.log
 </p></details>
 
 <br />
+
+### Clean up 
+
+```bash
+rm multi-container-nrm.yaml two-files-counter-pod-agent-sidecar.yaml fluentd-sidecar-config.yaml multi-container-pod.yaml
+kubectl delete config fluentd-sidecar-config
+kubectl delete pod multi-container-nrm counter two-files-counter-pod-agent-sidecar multi-container-pod --force 
+```

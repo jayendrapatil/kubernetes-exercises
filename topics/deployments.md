@@ -749,7 +749,39 @@ kubectl rollout history deployment web1
 # 1         <none>
 # 3         <none>
 # 4         <none>
+```
 
+</p></details>
+
+<br />
+
+### Create a deployment as follows:
+ - Name: nginx-app
+ - Using container nginx with version 1.20-alpine
+ - The deployment should contain 3 replicas
+ - Next, deploy the application with new version 1.21.4-alpine, by performing a rolling update.
+ - Finally, rollback that update to the previous version 1.11.10-alpine.
+
+<br />
+
+<details><summary>show</summary><p></p></details>
+
+```bash
+kubectl create deployment nginx-app --image=1.20-alpine --replicas=3
+kubectl set image deployment nginx-app 1-20-alpine-2v92q=1.21.4-alpine # use the container name
+deployment.apps/nginx-app image updated
+kubectl rollout history deployment nginx-app
+# deployment.apps/nginx-app 
+# REVISION  CHANGE-CAUSE
+# 1         <none>
+# 2         <none>
+kubectl rollout undo deploy nginx-app
+# deployment.apps/nginx-app rolled back
+kubectl rollout history deployment nginx-app
+# deployment.apps/nginx-app 
+# REVISION  CHANGE-CAUSE
+# 2         <none>
+# 3         <none>
 ```
 
 </p></details>
@@ -827,5 +859,5 @@ kubectl get pods -l app=nginx
 ```bash
 rm nginx-deployment.yaml web1.yaml dnsutils.yaml
 kubectl delete pod dnsutils
-kubectl delete deploy nginx-deployment nginx-random web1
+kubectl delete deploy nginx-deployment nginx-random web1 nginx-app
 ```
