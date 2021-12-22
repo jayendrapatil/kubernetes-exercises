@@ -1,6 +1,10 @@
-# ETCD
+# [ETCD](https://etcd.io/)
+
+<br />
 
 ### Check the version of ETCD
+
+<br />
 
 ```bash
 kubectl get pod etcd-controlplane  -n kube-system -o yaml | grep image
@@ -10,22 +14,41 @@ kubectl get pod etcd-controlplane  -n kube-system -o yaml | grep image
 ## Backup and Restore
 Refer [Backing up ETCD Cluster](https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster) & [Restoring ETCD Cluster](https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#restoring-an-etcd-cluster)
 
+<br />
+
 #### Create a snapshot of the etcd instance running at https://127.0.0.1:2379, saving the snapshot to the file path /opt/snapshot-pre-boot.db. Restore the snapshot. The following TLS certificates/key are supplied for connecting to the server with etcdctl:
  - CA certificate: /etc/kubernetes/pki/etcd/ca.crt
  - Client certificate: /etc/kubernetes/pki/etcd/server.crt
  - Client key: /etc/kubernetes/pki/etcd/server.key
 
+<details><summary>show</summary><p>
+
+#### Install ETCD Client
+
+```bash
+snap install etcd         # version 3.4.5, or
+apt  install etcd-client
+```
+
+#### Create deployment before backup for testing
+
+```bash
+kubectl create deploy nginx --image=nginx --replicas=3
+```
 
 #### Backup ETCD
-
-<!-- snap install etcd         # version 3.4.5, or
-apt  install etcd-client -->
 
 ```bash
 ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt \
      --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key \
           snapshot save /opt/snapshot-pre-boot.db
 # Snapshot saved at /opt/snapshot-pre-boot.db
+```
+
+#### Delete the deployment 
+
+```bash
+kubectl delete deployment nginx
 ```
 
 #### Restore ETCD Snapshot to a new folder
@@ -65,3 +88,12 @@ ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 --cacert=/etc/kuberne
      name: etcd-data
 ```
 
+#### Verify the deployment exists after restoration
+
+```bash
+kubectl get deployment nginx
+```
+
+</p></details>
+
+<br />

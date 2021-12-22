@@ -3,6 +3,7 @@
 A Deployment provides declarative updates for Pods and ReplicaSets.
 
  1. [Basics](#basics)
+ 2. [Deployment HA & Self Healing](#deployment-self-healing)
  2. [Deployment Scaling](#deployment-scaling)
  3. [Deployment Rollout](#deployment-rollout)
  4. [Deployment Deletion](#deployment-deletion)
@@ -204,6 +205,47 @@ kubectl exec dnsutils -- nslookup 10.50.0.8
 
 # 8.0.50.10.in-addr.arpa  name = 10-50-0-8.nginx-random.default.svc.cluster.local.
 
+```
+
+</p></details>
+
+<br />
+
+## Deployment Self healing
+
+<br />
+
+### Create a deployment named nginx-ha using nginx image with 3 replicas to test self-healing properties. Delete all pod and check the behaviour.
+
+<br />
+
+<details><summary>show</summary><p>
+
+#### Create deployment
+
+```bash
+kubectl create deployment nginx-ha --image=nginx --replicas=3
+
+kubectl get pods -l app=nginx-ha
+# NAME                       READY   STATUS    RESTARTS   AGE
+# nginx-ha-684994c76-2j4w8   1/1     Running   0          57s
+# nginx-ha-684994c76-7ssm8   1/1     Running   0          57s
+# nginx-ha-684994c76-kdp28   1/1     Running   0          57s
+```
+
+#### Delete all the pods and check behaviour as new pods are created.
+
+```bash
+kubectl delete pods -l app=nginx-ha --force
+
+kubectl get pods -l app=nginx-ha -w
+# NAME                       READY   STATUS              RESTARTS   AGE
+# nginx-ha-684994c76-m5n28   0/1     ContainerCreating   0          3s
+# nginx-ha-684994c76-pqfj4   0/1     ContainerCreating   0          3s
+# nginx-ha-684994c76-qxgfl   0/1     ContainerCreating   0          2s
+# nginx-ha-684994c76-pqfj4   1/1     Running             0          7s
+# nginx-ha-684994c76-m5n28   1/1     Running             0          9s
+# nginx-ha-684994c76-qxgfl   1/1     Running             0          8s
 ```
 
 </p></details>

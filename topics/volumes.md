@@ -1,5 +1,16 @@
 # [Volumes](https://kubernetes.io/docs/concepts/storage/volumes/)
 
+Kubernetes supports many types of volumes. A Pod can use any number of volume types simultaneously. Ephemeral volume types have a lifetime of a pod, but persistent volumes exist beyond the lifetime of a pod. When a pod ceases to exist, Kubernetes destroys ephemeral volumes; however, Kubernetes does not destroy persistent volumes. For any kind of volume in a given pod, data is preserved across container restarts.
+
+- [Config Volumes](#config-volumes)
+- [Secret Volumes](#secret-volumes)
+- [Ephemeral Volumes](#ephemeral-volumes)
+- [Persistent Volumes](#persistent-volumes)
+
+<br />
+
+## Config Volumes
+
 <br />
 
 ### Create a new pod `nginx-3` with `nginx` image and mount the configmap `db-config-1` as a volume named `db-config` and mount path `/config`
@@ -36,6 +47,10 @@ kubectl exec nginx-4 -- cat /config/DB_HOST # verify env variables
 
 <br />
 
+## Secret Volumes
+
+<br />
+
 ### Create a new pod `nginx-4` with `nginx` image and mount the secret `db-secret-1` as a volume named `db-secret` and mount path `/secret`
 
 <details><summary>show</summary><p>
@@ -69,6 +84,10 @@ kubectl exec nginx-4 -- cat /secret/DB_HOST  # verify env variables
 ```
 
 </p></details>
+
+<br />
+
+## [Ephemeral Volumes](https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/)
 
 <br />
 
@@ -132,6 +151,41 @@ spec:
 EOF
 
 kubectl apply -f non-persistent-redis.yaml
+```
+
+</p></details>
+
+<br />
+
+## [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+
+<br />
+
+### Create a persistent volume with name `app-data`, of capacity `200Mi` and access mode `ReadWriteMany`. The type of volume is `hostPath` and its location is `/srv/app-data`.
+
+<details><summary>show</summary><p>
+
+```yaml
+cat << EOF > app-data.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: app-data
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/srv/app-data"
+EOF
+
+kubectl apply -f app-data.yaml
+
+kubectl get pv
+# NAME       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS   REASON   AGE
+# app-data   200Mi      RWX            Retain           Available           manual
 ```
 
 </p></details>
