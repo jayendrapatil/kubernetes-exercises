@@ -11,4 +11,4 @@
 ## Resources
 
  - [Certified Kubernetes Administrator - CKA learning path](https://jayendrapatil.com/certified-kubernetes-administrator-cka-learning-path/)
- - [KodeKloud Certified Kubernetes Administrator Course](https://kodekloud.com/courses/certified-kubernetes-administrator-cka/)
+ - [KodeKloud Certified Kubernetes Administrator Course](https://shareasale.com/r.cfm?b=2319101&u=2367365&m=132199&urllink=&afftrack=)
