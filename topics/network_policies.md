@@ -18,6 +18,34 @@ kubectl get networkpolicy
 
 <br />
 
+### Create a default `deny-all` Network Policy that denies ingress and egress traffic 
+
+<details><summary>show</summary><p>
+
+```bash
+cat << EOF > deny-all.yaml
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: deny-all
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress: # deny all ingress
+  - {}
+  egress: # deny all egress
+  - {}
+EOF
+
+kubectl apply -f limit-consumer.yaml
+``` 
+
+</p></details>
+
+<br />
+
 ### Create three pods as per the below specs. Create a NetworkPolicy `limit-consumer` so that `consumer` pods can only be access from producer pods and not from web pods.
 1. Pod named `consumer` with image `nginx`. Expose via a ClusterIP service on port 80.
 2. Pod named `producer` with image `nginx`. Expose via a ClusterIP service on port 80.

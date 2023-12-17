@@ -311,7 +311,7 @@ vi time-limited-job.yaml
 
 ```bash
 cat << EOF > time-limited-job.yaml
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   creationTimestamp: null
@@ -362,7 +362,7 @@ vi time-limited-job.yaml
 
 ```bash
 cat << EOF > time-limited-job.yaml
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   creationTimestamp: null
@@ -398,11 +398,78 @@ kubectl apply -f time-limited-job.yaml
 
 <br />
 
+### Create a CronJob named `hello` that executes a Pod running the following single container.
+- name: hello
+- image: busybox:1.28
+- command: ["/bin/sh", "-c", "date; echo Hello from the Kubernetes cluster"]
+Configure the CronJob to
+- Execute once every 2 minutes
+- Keep 3 completed Job
+- Keep 3 failed job
+- Never restart Pods
+- Terminate Pods after 10 seconds
+Manually create and execute on job named `hello-test` from the `hello` CronJob for testing purpose.
+
+<br />
+
+<details><summary>show</summary><p>
+
+```bash
+kubectl create cronjob hello --image=busybox --restart=Never --dry-run=client --schedule="*/2 * * * *" -o yaml -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster' > hello-cronjob.yaml
+vi hello-cronjob.yaml
+```
+
+#### Add the following specs.
+
+```yaml
+cat << EOF > hello-cronjob.yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: hello
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: hello
+    spec:
+      activeDeadlineSeconds: 10 # Terminate Pods after 10 seconds
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - command:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+            image: busybox
+            name: hello
+            resources: {}
+          restartPolicy: Never # Never restart Pods 
+  schedule: '*/2 * * * *' # Execute once every 2 minutes
+  successfulJobsHistoryLimit: 3 # Keep 3 completed Job
+  failedJobsHistoryLimit: 3 # Keep 3 failed job
+status: {}
+EOF 
+
+kubectl apply -f hello-cronjob.yaml
+
+# Trigger the job manually
+kubectl create job --from=cronjob/hello hello-test
+```
+
+</p></details> 
+
+<br />
+
 ## Clean up
 
 <br />
 
 ```bash
-kubectl delete job pi busybox-parallelism-job busybox-completions-job
-kubectl delete cronjob time-limited-job
+rm hello-cronjob.yaml time-limited-job.yaml busybox-parallelism-job.yaml
+kubectl delete job pi busybox-parallelism-job busybox-completions-job hello-test
+kubectl delete cronjob time-limited-job hello-cronjob
 ```

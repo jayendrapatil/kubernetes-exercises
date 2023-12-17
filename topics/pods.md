@@ -255,7 +255,7 @@ Refer [Multi-container Pods](multi_container_pods.md)
 
 <br />
 
-### Create a pod `nginx-node-selector` that will be deployed to a Node that has the label 'accelerator=nvidia-tesla-p100'
+### Create a pod `nginx-node-selector` that will be deployed to a Node that has the label `accelerator=nvidia-tesla-p100`
 
 <details><summary>show</summary><p>
 
@@ -392,8 +392,6 @@ kubectl apply -f nginx-resources.yaml
 ## [Static Pods](https://kubernetes.io/docs/concepts/workloads/pods/#static-pods)
 
 <br />
-
-
 
 ### Configure the kubelet systemd-managed service, on the node labelled with name=node01, to launch a pod containing a single container of Image httpd named webtool automatically. Any spec files required should be placed in the /etc/kubernetes/manifests directory on the node.
 

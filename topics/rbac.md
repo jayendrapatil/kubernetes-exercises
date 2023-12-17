@@ -179,6 +179,34 @@ kubectl auth can-i get nodes --as proxy-admin
 
 <br />
 
+### Create the following - PENDING
+ - Create a new role named `deployent-role` which only allows to `create` the following resource types in the `finance` namespace.
+ - Deployment
+ - StatefuleSet
+ - DaemonSet
+- Create a new Service Account named `cicd-token` in the existing namespace `finance`
+- Bind the new Role `deployment-role` to the new serviceaccount `cicd-token` using Role binding `deployent-role-binding` limited to the namespace `finance`
+
+<br />
+
+<details><summary>show</summary><p>
+
+```bash
+kubectl create serviceaccount cicd-token -n finance
+kubectl create role deployent-role --resource=nodes --verb=get,list,create,update -n finance
+kubectl create rolebinding deployent-role-binding --serviceaccount=finance/cicd-token  --role=deployent-role -n finance
+```
+
+```bash
+# verify
+kubectl auth can-i get nodes --as proxy-admin
+# yes
+```
+
+</p></details>
+
+<br />
+
 ## Clean up 
 
 <br />

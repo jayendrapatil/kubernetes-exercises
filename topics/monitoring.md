@@ -17,3 +17,14 @@ kubectl top nodes
 ```bash
 kubectl top pods
 ```
+
+<br />
+
+### Find pod with label `name=high-cpu` running with high CPU workloads
+
+```bash
+kubectl top pods -l name=high-cpu --sort-by=CPU
+```
+
+<br />
+

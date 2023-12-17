@@ -1,4 +1,4 @@
-# [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/)
+# [Pod Security Policies - DEPRECATED](https://kubernetes.io/docs/concepts/policy/pod-security-policy/)
 
  - Pod Security Policies enable fine-grained authorization of pod creation and updates.  
  - PodSecurityPolicy is deprecated as of Kubernetes v1.21, and will be removed in v1.25.

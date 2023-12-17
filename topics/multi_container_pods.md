@@ -56,6 +56,69 @@ kubectl apply -f multi-container-nrm.yaml
 
 <br />
 
+### Create a pod named `sidecar-pod` with a single app container using the following spec. - PENDING
+```yaml
+cat << EOF > sidecar-pod.yaml
+apiVersion: batch/v1
+kind: Pod
+metadata:
+  name: sidecar-pod
+spec:
+  template:
+    spec:
+      containers:
+        - name: myapp
+          image: alpine:latest
+          command: ['sh', '-c', 'while true; do echo "logging" >> /opt/logs.txt; sleep 1; done']
+          volumeMounts:
+            - name: data
+              mountPath: /opt
+      volumes:
+        - name: data
+          emptyDir: {}
+
+kubectl apply -f sidecar-pod.yaml
+```
+- Add a sidecar container named `sidecar`, using the `busybox` image, to the existing `sidecar-pod` . The new sidecar container has to run the following command. `sh -c "tail -F /opt/logs.txt"`
+- Use a Volume mounted at the `/opt` to make the log file logs.txt available to the sidecar container.
+- Don't modify the specific of the existing container other than adding the required volume mount.
+
+<details><summary>show</summary><p>
+
+```yaml
+cat << EOF > sidecar-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sidecar-pod
+spec:
+  template:
+    spec:
+      containers:
+        - name: myapp
+          image: alpine:latest
+          command: ['sh', '-c', 'while true; do echo "logging" >> /opt/logs.txt; sleep 1; done']
+          volumeMounts:
+            - name: data
+              mountPath: /opt
+        - name: sidecar
+          image: busybox
+          restartPolicy: Always
+          command: ['sh', '-c', 'tail -F /opt/logs.txt']
+          volumeMounts:
+            - name: data
+              mountPath: /opt
+      volumes:
+        - name: data
+          emptyDir: {}
+
+kubectl apply -f multi-container-nrm.yaml
+```
+
+</p></details>
+
+<br />
+
 ### Create a multi-container pod using the fluentd acting as a sidecar container. with the given specs below. Update the deployment such that it runs both containers and the log files from the first container can be shared/used by the second container. Mount a shared volume /var/log on both containers, which does not persist when the pod is deleted.
 
 ```yaml
@@ -196,7 +259,7 @@ kubectl exec counter -c count-agent -- cat /var/log/1.log
 ### Clean up 
 
 ```bash
-rm multi-container-nrm.yaml two-files-counter-pod-agent-sidecar.yaml fluentd-sidecar-config.yaml multi-container-pod.yaml
+rm multi-container-nrm.yaml two-files-counter-pod-agent-sidecar.yaml fluentd-sidecar-config.yaml multi-container-pod.yaml sidecar-pod.yaml
 kubectl delete config fluentd-sidecar-config
-kubectl delete pod multi-container-nrm counter two-files-counter-pod-agent-sidecar multi-container-pod --force 
+kubectl delete pod multi-container-nrm counter two-files-counter-pod-agent-sidecar multi-container-pod sidecar-pod --force 
 ```
