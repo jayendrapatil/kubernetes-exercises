@@ -11,4 +11,7 @@
 ## Resources
 
  - [Certified Kubernetes Application Developer - CKAD learning path](https://jayendrapatil.com/certified-kubernetes-application-developer-ckad-learning-path/)
- - [KodeKloud Certified Kubernetes Application Developer Course](https://shareasale.com/r.cfm?b=2319509&u=2367365&m=132199&urllink=&afftrack=)
+ - [KodeKloud Certified Kubernetes Application Developer Course](https://shareasale.com/r.cfm?b=2319509&u=2367365&m=132199&urllink=&afftrack=)  
+
+
+<a target="_blank" href="https://shareasale.com/r.cfm?b=2484282&amp;u=2367365&amp;m=59485&amp;urllink=&amp;afftrack="><img src="https://static.shareasale.com/image/59485/970x250blue.png" border="0" /></a>

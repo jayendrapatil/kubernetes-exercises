@@ -24,6 +24,12 @@ kubectl get service web
 
 #### Create Ingress with the below specs and apply using `kubectl apply -f web-ingress.yaml`
 
+```bash
+kubectl create ingress web-ingress --rule="hello-world.info/=web:8080"
+```
+
+OR
+
 ```yaml
 cat << EOF > web-ingress.yaml
 apiVersion: networking.k8s.io/v1
