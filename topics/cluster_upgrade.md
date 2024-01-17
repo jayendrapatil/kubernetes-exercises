@@ -1,6 +1,6 @@
 # [Cluster Upgrade](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
 
-**NOTE** - This was performed on the [katacoda playground](https://www.katacoda.com/courses/kubernetes/playground) with two node cluster at v1.18.0 version. It was upgrade to 1.19.3 version. Version 1.19.4 was not used as it had issues upgrading on the worker node.
+~~**NOTE** - This was performed on the [katacoda playground](https://www.katacoda.com/courses/kubernetes/playground) with two node cluster at v1.18.0 version. It was upgrade to 1.19.3 version. Version 1.19.4 was not used as it had issues upgrading on the worker node.~~
 
 <br />
 

@@ -16,6 +16,6 @@
 - [Udemy Kubernetes CKS 2021 Complete Course – Theory – Practice](https://click.linksynergy.com/link?id=l7C703x9gqw&offerid=507388.3573079&type=2&murl=https%3A%2F%2Fwww.udemy.com%2Fcourse%2Fcertified-kubernetes-security-specialist%2F)  
 
 
-<a target="_blank" href="https://shareasale.com/r.cfm?b=2484282&amp;u=2367365&amp;m=59485&amp;urllink=&amp;afftrack="><img src="https://static.shareasale.com/image/59485/970x250blue.png" border="0" /></a>
+<a target="_blank" href="https://shareasale.com/r.cfm?b=2499049&u=2367365&m=59485&urllink=&afftrack="><img src="https://static.shareasale.com/image/59485/Jan24.promo.970x250.png" border="0" /></a>
 
 
