@@ -14,4 +14,4 @@
  - [KodeKloud Certified Kubernetes Application Developer Course](https://shareasale.com/r.cfm?b=2319509&u=2367365&m=132199&urllink=&afftrack=)  
 
 
-<a target="_blank" href="https://shareasale.com/r.cfm?b=2499049&u=2367365&m=59485&urllink=&afftrack="><img src="https://static.shareasale.com/image/59485/Jan24.promo.970x250.png" border="0" /></a>
+<a href="https://shareasale.com/r.cfm?b=2514961&u=2367365&m=59485&urllink=&afftrack=">Launch into the Lunar New Year with Sitewide Savings of 40% || Use code LUNAR24 at checkout || Offer ends February 9, 2024</a>
