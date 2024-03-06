@@ -13,4 +13,4 @@
  - [Certified Kubernetes Administrator - CKA learning path](https://jayendrapatil.com/certified-kubernetes-administrator-cka-learning-path/)
  - [KodeKloud Certified Kubernetes Administrator Course](https://shareasale.com/r.cfm?b=2319101&u=2367365&m=132199&urllink=&afftrack=)
 
-<a href="https://shareasale.com/r.cfm?b=2514961&u=2367365&m=59485&urllink=&afftrack=">Launch into the Lunar New Year with Sitewide Savings of 40% || Use code LUNAR24 at checkout || Offer ends February 9, 2024</a>
+<a target="_blank" href="https://shareasale.com/r.cfm?b=2530382&amp;u=2367365&amp;m=59485&amp;urllink=&amp;afftrack="><img src="https://static.shareasale.com/image/59485/lft_iwd24_901x501a1.png" border="0" /></a>

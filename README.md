@@ -14,7 +14,7 @@ Try out the Killercoda Kubernetes playgroud which provides 2 node Kubernetes clu
 ~~[Katacode Kubernetes Playgroud](https://www.katacoda.com/courses/kubernetes/playground)~~  
 
 
-<a href="https://shareasale.com/r.cfm?b=2514961&u=2367365&m=59485&urllink=&afftrack=">Launch into the Lunar New Year with Sitewide Savings of 40% || Use code LUNAR24 at checkout || Offer ends February 9, 2024</a>
+<a target="_blank" href="https://shareasale.com/r.cfm?b=2530382&amp;u=2367365&amp;m=59485&amp;urllink=&amp;afftrack="><img src="https://static.shareasale.com/image/59485/lft_iwd24_901x501a1.png" border="0" /></a>
 
 ## Structure 
 
