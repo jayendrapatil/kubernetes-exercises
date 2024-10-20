@@ -55,7 +55,7 @@ kubectl apply -f limit-consumer.yaml
 
 <details><summary>show</summary><p>
 
-#### Create the deployments and expose as service
+#### Create the pods and expose as service
 
 ```bash
 kubectl run consumer --image=nginx && kubectl expose pod consumer --port=80
