@@ -114,13 +114,15 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: hello-apparmor
-  annotations: # add apparmor annotations
-    container.apparmor.security.beta.kubernetes.io/hello: localhost/k8s-apparmor-example-deny-write # add this
 spec:
   containers:
   - name: hello
     image: busybox
     command: [ "sh", "-c", "echo 'Hello AppArmor!' && sleep 1h" ]
+    securityContext:     # add this section 
+      appArmorProfile:
+        type: Localhost
+        localhostProfile: k8s-apparmor-example-deny-write
 EOF
 
 kubectl apply -f hello-apparmor.yaml
